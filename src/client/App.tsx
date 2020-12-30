@@ -14,7 +14,7 @@ import {
   AdaptivityProps,
   ViewWidth,
   WebviewType,
-} from "@vkontakte/vkui/dist/cjs";
+} from "@vkontakte/vkui";
 
 export const AppLayout: FC<{}> = () => {
   return (

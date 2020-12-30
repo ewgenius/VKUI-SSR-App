@@ -5,7 +5,7 @@ import express from "express";
 import ReactDOMServer from "react-dom/server";
 
 import App from "../client/App";
-import { SSRWrapper } from "@vkontakte/vkui/dist/cjs";
+import { SSRWrapper } from "@vkontakte/vkui";
 
 const PORT = process.env.PORT || 3006;
 const app = express();
