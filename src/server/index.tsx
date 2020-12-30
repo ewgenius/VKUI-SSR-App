@@ -15,6 +15,7 @@ const template = (content: string) => `
   </head>
   <body>
     <div id="root">${content}</div>
+    <script src="/index.js"></script>
   </body>
 </html>
 `;
