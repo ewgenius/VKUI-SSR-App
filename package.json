@@ -5,6 +5,8 @@
   "author": "Evgenii Khramkov <ewgeniux@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "start": "node ./dist/server/index.js",
+    "build": "yarn build:server && yarn build:client",
     "dev:server:build": "NODE_ENV=development TS_NODE_PROJECT=\"tsconfig.webpack.json\" webpack -c webpack.server.ts --mode=development -w",
     "dev:server:start": "nodemon ./dist/server/index.js",
     "dev": "npm-run-all --parallel dev:server:build dev:client:build dev:server:start",
