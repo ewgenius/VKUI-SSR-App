@@ -14,34 +14,58 @@ import {
   AdaptivityProps,
   ViewWidth,
   WebviewType,
+  SSRWrapper,
+  CardScroll,
+  Card,
+  ModalRoot,
+  ModalPage,
+  ModalPageHeader,
+  CellButton,
 } from "@vkontakte/vkui";
 
 export const AppLayout: FC<{}> = () => {
   return (
-    <ConfigProvider isWebView webviewType={WebviewType.INTERNAL}>
-      <AdaptivityProvider>
-        <AppRoot>
-          <App />
-        </AppRoot>
-      </AdaptivityProvider>
-    </ConfigProvider>
+    <SSRWrapper>
+      <ConfigProvider isWebView webviewType={WebviewType.INTERNAL}>
+        <AdaptivityProvider>
+          <AppRoot>
+            <App />
+          </AppRoot>
+        </AdaptivityProvider>
+      </ConfigProvider>
+    </SSRWrapper>
   );
 };
 
 export const App: FC<AdaptivityProps> = withAdaptivity(
   ({ viewWidth }: AdaptivityProps) => {
-    const isDesktop = viewWidth >= ViewWidth.MOBILE;
+    const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
+    const [modal, setModal] = React.useState<string>(null);
+    const closeModal = () => setModal(null);
     return (
       <SplitLayout
         header={<PanelHeader separator={false} />}
         style={{ justifyContent: "center" }}
+        modal={
+          <ModalRoot activeModal={modal} onClose={closeModal}>
+            <ModalPage
+              id="modal1"
+              header={<ModalPageHeader>modal</ModalPageHeader>}
+              onClose={closeModal}
+            >
+              <Group>modal content</Group>
+            </ModalPage>
+          </ModalRoot>
+        }
       >
-        <SplitCol key="1" fixed width="280px" maxWidth="280px">
-          <Panel>
-            <PanelHeader />
-            <Group>test</Group>
-          </Panel>
-        </SplitCol>
+        {isDesktop && (
+          <SplitCol key="1" fixed width="280px" maxWidth="280px">
+            <Panel>
+              <PanelHeader />
+              <Group>sidebar</Group>
+            </Panel>
+          </SplitCol>
+        )}
 
         <SplitCol
           key="2"
@@ -54,6 +78,33 @@ export const App: FC<AdaptivityProps> = withAdaptivity(
             <Panel id="1">
               <PanelHeader>Test</PanelHeader>
               <Group>test content</Group>
+              <Group>
+                <CellButton onClick={() => setModal("modal1")}>
+                  open modal
+                </CellButton>
+              </Group>
+              <Group description="Внутри Group">
+                <CardScroll size="s">
+                  <Card>
+                    <div style={{ paddingBottom: "66%" }} />
+                  </Card>
+                  <Card>
+                    <div style={{ paddingBottom: "66%" }} />
+                  </Card>
+                  <Card>
+                    <div style={{ paddingBottom: "66%" }} />
+                  </Card>
+                  <Card>
+                    <div style={{ paddingBottom: "66%" }} />
+                  </Card>
+                  <Card>
+                    <div style={{ paddingBottom: "66%" }} />
+                  </Card>
+                  <Card>
+                    <div style={{ paddingBottom: "66%" }} />
+                  </Card>
+                </CardScroll>
+              </Group>
             </Panel>
           </View>
         </SplitCol>
